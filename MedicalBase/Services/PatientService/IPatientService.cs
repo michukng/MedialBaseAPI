@@ -13,5 +13,6 @@ namespace MedicalBase.Services.PatientService
         Task<ServiceResponse<GetPatientDTO>> UpdatePatient(UpdatePatientDTO updatedPatient);
         bool IsValidPesel(string pesel);
         bool isPeselIntegerAndLength(string pesel);
+        bool isValidPhoneNumber(string phoneNumber);
     }
 }
