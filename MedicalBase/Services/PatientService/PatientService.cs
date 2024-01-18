@@ -37,6 +37,12 @@ namespace MedicalBase.Services.PatientService
         {
             return pesel.Length == 11 && pesel.All(char.IsDigit);
         }
+        public bool isValidPhoneNumber(string phoneNumber)
+        {
+            string phoneNumberPattern = @"^[0-9]{9}$"; ;
+            return Regex.IsMatch(phoneNumber, phoneNumberPattern);
+
+        }
 
         private readonly IMapper _mapper;
 
@@ -106,6 +112,13 @@ namespace MedicalBase.Services.PatientService
                 return serviceResponse;
             }
 
+            if (!isValidPhoneNumber(newPatient.PhoneNumber))
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = "Phone number is not valid!";
+                return serviceResponse;
+            }
+
             if (patients.Any(x => x.Pesel == newPatient.Pesel))
             {
                 serviceResponse.Success = false;
@@ -164,10 +177,10 @@ namespace MedicalBase.Services.PatientService
                     return serviceResponse;
                 }
 
-                if (patients.Any(x => x.Pesel == updatedPatient.Pesel))
+                if (!isValidPhoneNumber(updatedPatient.PhoneNumber))
                 {
                     serviceResponse.Success = false;
-                    serviceResponse.Message = "Patient with this pesel number already exists!";
+                    serviceResponse.Message = "Phone number is not valid!";
                     return serviceResponse;
                 }
 

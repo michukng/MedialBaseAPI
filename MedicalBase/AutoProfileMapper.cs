@@ -10,6 +10,7 @@ namespace MedicalBase
         {
             CreateMap<Patient, GetPatientDTO>();
             CreateMap<AddPatientDTO, Patient>();
+            CreateMap<UpdatePatientDTO, Patient>();
         }
     }
 }
