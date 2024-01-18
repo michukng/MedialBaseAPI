@@ -35,12 +35,7 @@ namespace MedicalBase.Services.PatientService
 
         public bool isPeselIntegerAndLength(string pesel)
         {
-            if (pesel.Length == 11 && long.TryParse(pesel, out _))
-            {
-                return true;
-            }
-
-            return false;
+            return pesel.Length == 11 && pesel.All(char.IsDigit);
         }
 
         private readonly IMapper _mapper;
