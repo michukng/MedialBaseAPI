@@ -11,7 +11,7 @@ namespace MedicalBase.Services.PatientService
         private static List<Patient> patients = new List<Patient>
         { 
             new Patient(),
-            new Patient { Id = 1, FirstName = "Krzysztof", Pesel = "10987654321"} 
+            
         };
 
         public bool IsValidPesel(string pesel)
@@ -35,14 +35,12 @@ namespace MedicalBase.Services.PatientService
 
         public bool isPeselIntegerAndLength(string pesel)
         {
-            return pesel.Length == 11 && pesel.All(char.IsDigit);
-        }
+            if (pesel.Length == 11 && long.TryParse(pesel, out _))
+            {
+                return true;
+            }
 
-        public bool isValidPhoneNumber(string phoneNumber)
-        {
-            string phoneNumberPattern = @"^[0-9]{9}$"; ;
-            return Regex.IsMatch(phoneNumber, phoneNumberPattern);
-
+            return false;
         }
 
         private readonly IMapper _mapper;
@@ -113,13 +111,6 @@ namespace MedicalBase.Services.PatientService
                 return serviceResponse;
             }
 
-            if (!isValidPhoneNumber(newPatient.PhoneNumber))
-            {
-                serviceResponse.Success = false;
-                serviceResponse.Message = "Phone number is not valid!";
-                return serviceResponse;
-            }
-
             if (patients.Any(x => x.Pesel == newPatient.Pesel))
             {
                 serviceResponse.Success = false;
@@ -178,10 +169,10 @@ namespace MedicalBase.Services.PatientService
                     return serviceResponse;
                 }
 
-                if (!isValidPhoneNumber(updatedPatient.PhoneNumber))
+                if (patients.Any(x => x.Pesel == updatedPatient.Pesel))
                 {
                     serviceResponse.Success = false;
-                    serviceResponse.Message = "Phone number is not valid!";
+                    serviceResponse.Message = "Patient with this pesel number already exists!";
                     return serviceResponse;
                 }
 
