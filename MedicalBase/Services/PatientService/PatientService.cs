@@ -11,7 +11,11 @@ namespace MedicalBase.Services.PatientService
         private static List<Patient> patients = new List<Patient>
         { 
             new Patient(),
+<<<<<<< HEAD
             new Patient { Id = 1, FirstName = "Krzysztof", Pesel = "10987654321"}
+=======
+            new Patient { Id = 1, FirstName = "Iwona", Pesel = "10987654321"}
+>>>>>>> 9d16eafcacc7e6c3d9fdc7a878aff69736920dd8
             
         };
 
